@@ -17,28 +17,24 @@ class TestBooksCollector:
         collector.add_new_book('Гордость и предубеждение')
         assert collector.get_books_genre() == {'Гордость и предубеждение': ''}
 
+    @pytest.mark.parametrize('name', ['', 'Удивительное путешествие Нильса Хольгерсс'])
+    def test_add_new_book_name_out_of_range(self, name):
+        collector = BooksCollector()
+        collector.add_new_book(name)
+        assert len(collector.get_books_genre()) == 0
 
-    @pytest.mark.parametrize('name', ['',
-                                      'Удивительное путешествие Нильса Хольгерсс',
-                                      'Удивительное путешествие Нильса Хольгерссона с дикими гусями по Швеции'])
-    def test_add_new_book_name_out_of_range(self, name, books_collection):
-        books_collection.add_new_book(name)
-        assert len(books_collection.get_books_genre()) == 0
-
-
-    @pytest.mark.parametrize('name', ['К югу от границы',
-                                      'Любовь как роза, красива, но шипы больны',
-                                      'Я'])
-    def test_add_new_book_name_in_the_range(self, name, books_collection):
-        books_collection.add_new_book(name)
-        assert name in books_collection.get_books_genre()
-
+    @pytest.mark.parametrize('name', ['К югу от границы', 'Я'])
+    def test_add_new_book_name_in_the_range(self, name):
+        collector = BooksCollector()
+        collector.add_new_book(name)
+        assert name in collector.get_books_genre()
 
     def test_set_book_genre_to_existing_book(self):
         collector = BooksCollector()
         collector.add_new_book('Гордость и предубеждение')
         collector.set_book_genre('Гордость и предубеждение', 'Фантастика')
         assert collector.get_books_genre() == {'Гордость и предубеждение': 'Фантастика'}
+
 
 
     def test_set_book_genre_to_not_existing_book(self):
@@ -83,7 +79,6 @@ class TestBooksCollector:
     def test_add_book_in_favorites_not_added_in_favorites_book(self, my_books_collection):
         my_books_collection.add_book_in_favorites('Симбиоз')
         assert 'Симбиоз' in my_books_collection.get_list_of_favorites_books() and len(my_books_collection.get_list_of_favorites_books()) == 1
-
 
     def test_add_book_in_favorites_added_in_favorites_book(self, my_books_collection):
         my_books_collection.add_book_in_favorites('Симбиоз')

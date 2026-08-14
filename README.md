@@ -1,4 +1,11 @@
-test_add_new_book_add_two_books: проверка добавления двух книг
+test_add_new_book_single_book — базовый позитивный тест.
+test_add_new_book_add_two_books — добавление нескольких книг.
+test_add_new_book_already_added_book — проверка на дубликаты.
+test_add_new_book_name_out_of_range — негативные сценарии по имени.
+test_add_new_book_name_in_the_range — позитивные сценарии по имени.
+Тесты для set_book_genre (существующий/несуществующий, допустимый/недопустимый жанр).
+Тесты на получение жанров и списков (включая параметризованные).
+Тесты на избранное (с использованием фикстуры my_books_collection).test_add_new_book_add_two_books: проверка добавления двух книг
 test_add_new_book_already_added_book: негативная проверка на повторное добавление книги
 test_add_new_book_name_out_of_range: негативная проверка на добавление книги с невалидным названием
 test_add_new_book_name_in_the_range: проверка на добавление книги с валидным названием

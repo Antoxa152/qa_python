@@ -1,4 +1,3 @@
-
 test_add_new_book_single_book — базовый позитивный тест.
 test_add_new_book_add_two_books — добавление нескольких книг.
 test_add_new_book_already_added_book — проверка на дубликаты.

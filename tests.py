@@ -26,14 +26,21 @@ class TestBooksCollector:
         books_collection.set_book_genre(name, genre)
         assert books_collection.get_book_genre(name) == genre
 
-    @pytest.mark.parametrize('name, genre', [
-        ('Гордость и предубеждение и зомби', 'Ужасы'),
-        ('Что делать, если ваш кот хочет вас убить', 'Комедии')
-    ])
-    def test_get_books_with_specific_genre_by_genre(self, name, genre, books_collection):
-        books_collection.add_new_book(name)
-        books_collection.set_book_genre(name, genre)
-        assert books_collection.get_books_with_specific_genre(genre) == [name]
+    @pytest.mark.parametrize('genre', ['Фантастика', 'Детективы'])
+    def test_get_books_with_specific_genre_returns_list(self, genre, books_collection):
+        books = [
+            f'Книга 1 ({genre})',
+            f'Книга 2 ({genre})',
+            f'Книга 3 ({genre})'
+        ]
+        for b in books:
+            books_collection.add_new_book(b)
+            books_collection.set_book_genre(b, genre)
+
+        result = books_collection.get_books_with_specific_genre(genre)
+        assert isinstance(result, list)
+        assert set(result) == set(books)
+        assert len(result) == len(books)
 
     def test_get_books_for_children(self, my_books_collection):
         books = my_books_collection.get_books_for_children()
@@ -86,11 +93,11 @@ class TestBooksCollector:
 
     def test_get_books_with_specific_genre_by_wrong_genre(self, my_books_collection):
         result = my_books_collection.get_books_with_specific_genre('Трагикомедии')
-        assert len(result) == 0
+        assert isinstance(result, list) and len(result) == 0
 
     def test_add_book_in_favorites_added_in_favorites_book(self, my_books_collection):
         my_books_collection.add_book_in_favorites('Симбиоз')
-        my_books_collection.add_book_in_favorites('Симбиоз')  
+        my_books_collection.add_book_in_favorites('Симбиоз')  # повторный вызов
         favs = my_books_collection.get_list_of_favorites_books()
         assert 'Симбиоз' in favs
         assert len(favs) == 1  
@@ -106,3 +113,4 @@ class TestBooksCollector:
         favs = my_books_collection.get_list_of_favorites_books()
         assert len(favs) == 1
         assert 'Гадкий Я' not in favs
+

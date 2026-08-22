@@ -1,21 +1,21 @@
+
 import pytest
 from main import BooksCollector
 
 
 @pytest.fixture
 def books_collection():
-    books_collection = BooksCollector()
-    return books_collection
+    return BooksCollector()
 
 
 @pytest.fixture
-def my_books_collection(books_collection):
-    my_collection = books_collection
+def my_books_collection():
+    collection = BooksCollector()
     books = ['Симбиоз', 'Демон', 'Внутри убийцы', 'Гадкий Я', 'Ревизор']
-    genre = ['Фантастика', 'Ужасы', 'Детективы', 'Мультфильмы', 'Комедии']
-    for i in range(5):
-        my_collection.add_new_book(books[i])
-    for i in range(5):
-        my_collection.set_book_genre(books[i], genre[i])
-    return my_collection
+    genres = ['Фантастика', 'Ужасы', 'Детективы', 'Мультфильмы', 'Комедии']
 
+    for title, genre in zip(books, genres):
+        collection.add_new_book(title)
+        collection.set_book_genre(title, genre)
+
+    return collection
